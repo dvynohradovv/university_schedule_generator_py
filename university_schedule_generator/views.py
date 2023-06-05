@@ -5,13 +5,14 @@ from django.views import View
 
 from university_schedule_generator.forms import GenerateScheduleForm
 from university_schedule_generator.models import LessonType
-from university_schedule_generator.services import PresetService
+from university_schedule_generator.services import PresetService, ScheduleReportService
 
 
 class GenerateScheduleView(View):
     def __init__(self, **kwargs: Any) -> None:
         super().__init__(**kwargs)
 
+        self.report_service = ScheduleReportService()
         self.preset_service = PresetService()
 
         self.data = {
@@ -26,6 +27,7 @@ class GenerateScheduleView(View):
         data = self.data
 
         data["form"] = GenerateScheduleForm()
+        data["schedule_reports"] = self.report_service.get_all_schedule_reports()
 
         return render(request, self.template_name, data)
 
@@ -37,5 +39,7 @@ class GenerateScheduleView(View):
 
         if form.is_valid():
             csv_file = form.cleaned_data["csv_file"]
+
+        data["schedule_reports"] = self.report_service.get_all_schedule_reports()
 
         return render(request, self.template_name, data)

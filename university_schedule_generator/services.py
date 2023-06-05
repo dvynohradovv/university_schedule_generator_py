@@ -1,6 +1,6 @@
 import os
 
-from university_schedule_generator.models import Classroom, Schedule
+from university_schedule_generator.models import Classroom, ScheduleReport, Schedule
 from university_schedule_generator.settings import BASE_DIR
 from university_schedule_generator.utils import csv_to_dict
 
@@ -24,3 +24,18 @@ class PresetService:
         print(data)
 
         return data
+
+
+class ScheduleReportService:
+    schedule_report_dirpath = os.path.join(
+        BASE_DIR, "university_schedule_generator", "data", "schedule_report"
+    )
+
+    def get_all_schedule_reports(self):
+        file_paths = []
+        for root, directories, files in os.walk(self.schedule_report_dirpath):
+            for file_name in files:
+                file_path = os.path.join(root, file_name)
+                file_paths.append(file_path)
+
+        return [ScheduleReport(file_path=fp) for fp in file_paths]

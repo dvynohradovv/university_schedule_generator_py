@@ -1,4 +1,5 @@
 import enum
+import os
 
 
 # Enums
@@ -39,6 +40,16 @@ class Classroom:
     @property
     def raw_rooms(self):
         return " ".join(self.rooms)
+
+
+class ScheduleReport:
+    def __init__(self, *args, **kwargs):
+        self.file_path = kwargs.get("file_path", None)
+
+    @property
+    def file_name(self):
+        print(self.file_path)
+        return os.path.basename(self.file_path) if self.file_path else ""
 
 
 # DB models
