@@ -5,3 +5,10 @@ __pycache__
 algorithm/
 
 data/
+
+# IDE
+.vscode/
+
+# Data
+schedule_report/
+schedule_template/

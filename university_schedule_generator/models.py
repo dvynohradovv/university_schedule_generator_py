@@ -1,3 +1,4 @@
+from datetime import datetime
 import enum
 import os
 
@@ -29,6 +30,17 @@ class Schedule:
     def raw_groups(self):
         return " ".join(self.groups)
 
+    @property
+    def to_json_request(self):
+        return {
+            "Subject": self.subject,
+            "Type": self.type,
+            "Lecturer": self.lecturer,
+            "Classroom": self.classroom,
+            "Duration": self.duration,
+            "Groups": self.groups,
+        }
+
 
 class Classroom:
     def __init__(self, *args, **kwargs):
@@ -48,8 +60,13 @@ class ScheduleReport:
 
     @property
     def file_name(self):
-        print(self.file_path)
         return os.path.basename(self.file_path) if self.file_path else ""
+
+    @property
+    def created_at(self):
+        date_string = self.file_name.split("|")[2].removesuffix(".xlsx")
+        datetime_object = datetime.strptime(date_string, "%Y-%m-%d %H:%M:%S")
+        return datetime_object
 
 
 # DB models

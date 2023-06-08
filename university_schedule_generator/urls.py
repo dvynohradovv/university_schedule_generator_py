@@ -17,9 +17,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from university_schedule_generator.views import GenerateScheduleView
+from university_schedule_generator.views import GenerateScheduleView, ScheduleReportView
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", GenerateScheduleView.as_view()),
+    path("schedule_report/<str:file_name>/", ScheduleReportView.as_view()),
 ]

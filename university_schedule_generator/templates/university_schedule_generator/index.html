@@ -167,7 +167,8 @@
 </svg>
 
 <header class="navbar sticky-top bg-dark flex-md-nowrap p-0 shadow" data-bs-theme="dark">
-    <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6 text-white" href="#">Vynohradov Dmytro</a>
+    <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6 text-white" href="http://127.0.0.1:8000">Vynohradov
+        Dmytro</a>
 
     <ul class="navbar-nav flex-row d-md-none">
         <li class="nav-item text-nowrap">
@@ -208,7 +209,8 @@
                 <div class="offcanvas-body d-md-flex flex-column p-0 pt-lg-3 overflow-y-auto">
                     <ul class="nav flex-column">
                         <li class="nav-item">
-                            <a class="nav-link d-flex align-items-center gap-2 active" aria-current="page" href="#">
+                            <a class="nav-link d-flex align-items-center gap-2 active" aria-current="page"
+                                href="http://127.0.0.1:8000">
                                 <svg class="bi">
                                     <use xlink:href="#house-fill" />
                                 </svg>
@@ -220,7 +222,7 @@
                     <h6
                         class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-body-secondary text-uppercase">
                         <span>Saved reports</span>
-                        <a class="link-secondary" href="#" aria-label="Add a new report">
+                        <a class="link-secondary" href="http://127.0.0.1:8000" aria-label="Add a new report">
                             <svg class="bi">
                                 <use xlink:href="#plus-circle" />
                             </svg>
@@ -229,8 +231,8 @@
                     <ul class="nav flex-column mb-auto">
                         {% for sreport in schedule_reports %}
                         <li class="nav-item">
-                            <a class="nav-link d-flex align-items-center gap-2" href=file:///{{sreport.file_path}}
-                                download>
+                            <a class="nav-link d-flex align-items-center gap-2"
+                                href="schedule_report/{{sreport.file_name}}/">
                                 <svg class="bi">
                                     <use xlink:href="#file-earmark-text" />
                                 </svg>
@@ -258,7 +260,19 @@
                         <button class="w-100 btn btn-lg btn-primary" type="submit">Generate</button>
                     </div>
                 </form>
+                {% if workbook_fname %}
+                <h4 class="">Schedule was successful generated and available
+                    <a class="nav-link" href="schedule_report/{{workbook_fname}}/">
+                        <svg class="bi">
+                            <use xlink:href="#file-earmark-text" />
+                        </svg>
+                        here
+                    </a>
+                </h4>
+                {% endif %}
             </div>
+
+
 
             <h2>FAQ for presets CSV</h2>
 
