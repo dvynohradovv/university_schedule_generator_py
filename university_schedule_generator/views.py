@@ -1,4 +1,5 @@
 import os
+from tempfile import NamedTemporaryFile
 from typing import Any
 
 import openpyxl
@@ -64,19 +65,18 @@ class ScheduleReportView(View):
         )
 
         try:
-            # Open the XLSX file
             workbook = openpyxl.load_workbook(file_location)
-            # Create the HttpResponse object with the XLSX content
-            response = HttpResponse(
-                content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-            )
-            # Set the response headers
-            response["Content-Disposition"] = f'attachment; filename="{file_name}"'
-            # Set the workbook content as the response content
-            response.write(workbook)
-
         except IOError:
-            # handle file not exist case here
-            response = HttpResponseNotFound("<h1>File not exist</h1>")
+            response = HttpResponseNotFound("File doesnt exist")
 
+        with NamedTemporaryFile() as tmp:
+            workbook.save(tmp.name)
+            tmp.seek(0)
+            stream = tmp.read()
+
+        response = HttpResponse(
+            content=stream,
+            content_type="application/ms-excel",
+        )
+        response["Content-Disposition"] = f"attachment; filename={file_name}"
         return response
